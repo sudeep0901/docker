@@ -6,17 +6,17 @@ services:
     build:
       context: .
       dockerfile: node.dockerfile
-    ports:
+    ports: 
       - "3000:3000"
-    networks:
+    networks: 
       - nodeapp-network
-    depends_on: 
-      - mongodb
-      
+
+
   mongodb:
     image: mongo
-    networks:
+    networks: 
       - nodeapp-network
+
 
 networks:
   nodeapp-network:

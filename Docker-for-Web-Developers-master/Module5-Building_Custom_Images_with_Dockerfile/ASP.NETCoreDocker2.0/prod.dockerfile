@@ -6,7 +6,7 @@ COPY . .
 RUN dotnet publish --output ./out
 
 FROM microsoft/aspnetcore
-LABEL author="Dan Wahlin" 
+LABEL author="Sudeep Patel" 
 WORKDIR /app
 COPY --from=publish /publish/out .
 ENV ASPNETCORE_URLS=http://*:5000

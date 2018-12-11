@@ -18,6 +18,7 @@ Interested in learning more about Docker? Visit https://www.pluralsight.com/cour
 
 ### Starting the Application with Docker Compose
 
+
 1. Install Docker for Windows or Docker for Mac (If you're on Windows 7 install Docker Toolbox: http://docker.com/toolbox).
 
 2. Open a command prompt at the root of the application's folder.
@@ -55,3 +56,5 @@ Interested in learning more about Docker? Visit https://www.pluralsight.com/cour
 
 
 
+
+# sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
