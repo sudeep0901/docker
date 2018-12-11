@@ -40,3 +40,12 @@ docker service ps web
 # scale taks to 4 instances
   docker service scale web=4
 
+# Read tasks & Scheduling
+docker service create --name customer-api --publish 3000:3000 swarmgs/customer
+--
+#adding Node multiple nodes
+# remove node 
+docker swarm leave
+
+docker swarm leave --force
+
