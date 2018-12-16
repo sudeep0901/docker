@@ -190,3 +190,191 @@ http://192.168.99.201:8080/docker/
 
 # random
 docker service create --name customer-api random -p target=3000 swarmgs/customer
+
+
+# update docker applicatoin version 2
+
+docker service update --image swarmgs/payroll:2
+docker service update --image swarmgs/payroll:2 pay
+
+# 3rd version
+ docker service update --image swarmgs/payroll:3 --update-delay=20s  pay
+
+# rollback to previous version
+
+ docker service update --image swarmgs/payroll:3 --update-delay=20s --update-parallelism=2  pay
+
+
+# taks clean up
+docker service scale=0
+
+
+# use watch command to observe progress of any command
+watch docker service ls
+
+<!-- check rollout mode -->
+
+# check --rollback flag in docker github repo documentation
+
+# check - --force flag
+
+--update -monitor
+
+# to resume paused update
+
+service update pay(servic name)
+
+#Networkint
+
+overlay Network
+---------------------
+
+do not expose api ports to external
+
+# check ingress network
+# creating overlay network
+
+
+docker network create -d overlay --subnet=10.0.9.0/24 backend
+
+ docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+11pv3noy3vu6        backend             overlay             swarm
+a87cdc5046a9        bridge              bridge              local
+bf1294976592        docker_gwbridge     bridge              local
+58944a26225b        host                host                local
+v817ldxnkz5r        ingress             overlay             swarm
+6316cecf3090        none                null                local
+
+
+# using created overlay netowkr and exposing 5000 port and mapping it to 3002 internal port of service
+ docker service create --name balance -p 5000:3000 \
+> --network backend \
+> swarmgs/balance
+
+
+# create customer api whcih will be used by balance api
+
+
+docker service create --name customer --network backend swarmgs/customer
+
+
+# note not port is exposed from service, balance api will internally discover api
+# http://192.168.99.201:5000/balance/1 - still does not work
+
+<!-- IP in host varilable in node js app -->
+
+# check service logs
+docker service logs balance 
+
+
+# service discovery using service name
+<!-- , provide environment varialbe -->
+
+# add environment variable
+docker service  update --env-add MYWEB_CUSTOMER_API=customer:300 blanace
+
+
+
+sudeep@sudeep:~/Projects/github/docker/docker-swarm-mode-getting-started-master$ docker exec -it 7d6c41226254 bash
+root@7d6c41226254:/app# dig customer
+
+; <<>> DiG 9.9.5-9+deb8u10-Debian <<>> customer
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 16220
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;customer.			IN	A
+
+;; ANSWER SECTION:
+customer.		600	IN	A	10.0.9.9 
+# internal loadbalancer
+
+;; Query time: 4 msec
+;; SERVER: 127.0.0.11#53(127.0.0.11)
+;; WHEN: Thu Dec 13 04:10:47 UTC 2018
+;; MSG SIZE  rcvd: 50
+
+
+# root@7d6c41226254:/app# dig tasks.customer
+
+; <<>> DiG 9.9.5-9+deb8u10-Debian <<>> tasks. customer
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 46796
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;tasks.				IN	A
+
+;; Query time: 4 msec
+;; SERVER: 127.0.0.11#53(127.0.0.11)
+;; WHEN: Thu Dec 13 04:11:50 UTC 2018
+;; MSG SIZE  rcvd: 34
+
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 8584
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;customer.			IN	A
+
+;; ANSWER SECTION:
+customer.		600	IN	A	10.0.9.9
+
+;; Query time: 1 msec
+;; SERVER: 127.0.0.11#53(127.0.0.11)
+;; WHEN: Thu Dec 13 04:11:50 UTC 2018
+;; MSG SIZE  rcvd: 50
+
+root@7d6c41226254:/app# dig tasks.customer
+
+; <<>> DiG 9.9.5-9+deb8u10-Debian <<>> tasks.customer
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 8977
+;; flags: qr rd ra; QUERY: 1, ANSWER: 6, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;tasks.customer.			IN	A
+
+;; ANSWER SECTION:
+tasks.customer.		600	IN	A	10.0.9.17
+tasks.customer.		600	IN	A	10.0.9.10
+tasks.customer.		600	IN	A	10.0.9.16
+tasks.customer.		600	IN	A	10.0.9.13
+tasks.customer.		600	IN	A	10.0.9.15
+tasks.customer.		600	IN	A	10.0.9.14
+
+;; Query time: 3 msec
+;; SERVER: 127.0.0.11#53(127.0.0.11)
+;; WHEN: Thu Dec 13 04:12:00 UTC 2018
+;; MSG SIZE  rcvd: 212
+
+
+# http://192.168.99.201:5000/inspect
+# IVPS - IP Virtual Server
+
+# DNT Round robin
+
+docker service update --endpoint-mode=dnsrr customer ( for own loadbalancer to use and do not use internal LB or do not want to load balance)
+
+# Docker stacks
+----------------
+ # To create / update
+ docker stack deploy -c services/viz.yml viz
+
+
+ #remote
+ docker stack rm viz
+
+ docker stack ps apis
+
+
+
+
+

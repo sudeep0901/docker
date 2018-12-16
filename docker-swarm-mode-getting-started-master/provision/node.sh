@@ -38,6 +38,7 @@ echo "File daemon created"
 
 wget -O /lib/systemd/system/docker.service https://raw.githubusercontent.com/docker/docker/v17.03.0-ce/contrib/init/systemd/docker.service.rpm
 
+# check if docker daemon is running issue
 # apt-get install \
 #     apt-transport-https \
 #     ca-certificates \
@@ -61,9 +62,9 @@ systemctl daemon-reload
 
 echo "restring daemon"
 
-systemctl restart docker
+# systemctl restart docker
 
-systemctl status docker
+# systemctl status docker
 
 usermod -aG docker ${USER}
 usermod -aG docker sudeep
@@ -75,9 +76,23 @@ groupadd docker
 usermod -aG docker $(whoami)
 usermod -aG docker sudeep
 service docker restart
+systemctl daemon-reload
+service docker restart
 
 
 
 # optional tools for learning 
 apt-get install -y -q ipvsadm tree
 # lsns is helpful from util-linux, this is installed already
+
+
+# docker updates
+# ----------------------------
+swarmgs/payroll
+
+# version 1
+docker service create --name pay -p 3000:3000 swarmgs/payroll:1 #version 2
+
+
+
+docker service scale pay=3
