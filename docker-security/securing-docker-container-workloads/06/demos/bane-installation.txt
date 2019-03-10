@@ -1,0 +1,13 @@
+In order to install bane on a Linux system (amd64), use the following instructions:
+
+    - Check for the latest release version at https://github.com/jessfraz/bane/releases
+
+    - Retrieve the binary, substituting <release> with the release tag (e.g. v0.3.0)
+
+      curl -L https://github.com/jessfraz/bane/releases/download/<release>/bane-linux-amd64 > ./bane
+
+    - Change mode and permissions, and move to appropriate location
+
+      chmod a+x ./bane
+      sudo chown root.root ./bane
+      sudo mv ./bane /usr/local/bin

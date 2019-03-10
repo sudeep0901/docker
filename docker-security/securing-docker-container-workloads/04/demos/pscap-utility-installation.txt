@@ -1,0 +1,15 @@
+In order to make use of the cgroup tools and stress utility, shown in the demonstration, the relevant packages need to be installed for your particular Linux distribution.
+
+Fedora
+++++++
+
+For Fedora, and its downstream derivatives (e.g. RHEL, CentOS):
+
+    - install the libcap-ng-utils
+
+Debian
+++++++
+
+For Debian, and its downstream derivatives (e.g. Ubuntu):
+
+    - install the libcap-ng-utils

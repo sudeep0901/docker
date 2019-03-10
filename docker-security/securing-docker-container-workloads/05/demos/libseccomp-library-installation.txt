@@ -1,0 +1,15 @@
+In order to compile the seccomp-filter-mode.c program, it needs to be linked with the developemnt version of the libseccomp library.
+
+Fedora
+++++++
+
+For Fedora, and its downstream derivatives (e.g. RHEL, CentOS):
+
+    - install the libseccomp-devel package
+
+Debian
+++++++
+
+For Debian, and its downstream derivatives (e.g. Ubuntu):
+
+    - install the libseccomp-dev package

@@ -12,7 +12,7 @@ docker run -dt --name c2 --network ps-bridge alpine sleep 1d
 brctl show
 
 Multi-host Networking Docker
---------------------------------
+--------------------------------dir
 overlay Network
 containers on mutliple host can connect each using VXLAN Tunnerl without crossing router
 

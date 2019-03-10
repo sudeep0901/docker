@@ -1,0 +1,9 @@
+gosu
+++++
+
+The gosu GitHub repository is located at https://github.com/tianon/gosu
+
+su-exec
++++++++
+
+The su-exec GitHub repository is located at https://github.com/ncopa/su-exec

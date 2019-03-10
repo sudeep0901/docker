@@ -1,0 +1,18 @@
+In order to make use of the cgroup tools and stress utility, shown in the demonstration, the relevant packages need to be installed for your particular Linux distribution.
+
+Fedora
+++++++
+
+For Fedora, and its downstream derivatives (e.g. RHEL, CentOS):
+
+    - install the libcgroup-tools package, and its dependencies
+    - for RHEL & CentOS, install the epel-release package
+    - install the stress package
+
+Debian
+++++++
+
+For Debian, and its downstream derivatives (e.g. Ubuntu):
+
+    - install the cgroup-tools package, and its dependencies
+    - install the stress package

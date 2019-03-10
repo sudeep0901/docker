@@ -1,0 +1,18 @@
+# Name of the profile, we will auto prefix with `docker-`
+Name = "apiserver"
+
+# Allowed capabilities
+[Capabilities]
+Allow = [
+	"net_bind_service",
+	"net_raw"
+]
+
+[Network]
+# Set Raw to false and deny network raw, required by ping
+Raw = true
+Protocols = [
+	"tcp",
+	"icmp"
+]
+
